@@ -4,8 +4,8 @@ echo "Lets install the worker node itself"
 
 # Install branectl 
 echo "install branectl"
-curl -Lo /usr/local/bin/branectl https://github.com/epi-project/brane/releases/latest/download/branectl-linux-x86_64
-chmod +x /usr/local/bin/branectl
+sudo curl -Lo /usr/local/bin/branectl https://github.com/epi-project/brane/releases/latest/download/branectl-linux-x86_64
+sudo chmod +x /usr/local/bin/branectl
 git clone https://github.com/epi-project/brane & cd brane
 
 # Brane worker stuff
