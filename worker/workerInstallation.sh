@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ipAddress=$1
 
 echo "Lets install the worker node itself"
@@ -24,5 +26,4 @@ cd ..
 cd ..
 # Make the images for the worker
 echo "make the necessary images"
-pwd
-make central-images PROFILE=release
+make worker-images PROFILE=release

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ipAddress=$1
 
 echo "Lets install the control node itself"
@@ -16,4 +18,4 @@ mkdir config/certs/workerNode
 
 # Make the images for the control node
 echo "make the necessary images"
-#make central-images PROFILE=release
+make central-images PROFILE=release
