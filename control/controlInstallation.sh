@@ -12,7 +12,7 @@ echo "create brane control files"
 
 branectl generate infra -f -p config/infra.yml workerNode:worker.nl
 branectl generate proxy -f -p ./config/proxy.yml
-branectl generate node -f -H control.nl:$ipAddres central control.nl
+branectl generate node -f -H control.nl:$ipAddress central control.nl
 
 mkdir config/certs/workerNode
 
