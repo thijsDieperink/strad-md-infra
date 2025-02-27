@@ -2,10 +2,6 @@ ipAddress=$1
 
 echo "Lets install the worker node itself"
 
-# Install branectl 
-echo "install branectl"
-#sudo curl -Lo /usr/local/bin/branectl https://github.com/epi-project/brane/releases/latest/download/branectl-linux-x86_64
-#sudo chmod +x /usr/local/bin/branectl
 git clone https://github.com/epi-project/brane
 cd brane
 
@@ -26,4 +22,4 @@ branectl generate certs client workerNode -H worker.nl -f -p ./client-certs
 
 # Make the images for the worker
 echo "make the necessary images"
-#make central-images PROFILE=release
+make central-images PROFILE=release
