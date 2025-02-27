@@ -16,9 +16,9 @@ echo "install branectl"
 echo "create brane worker files"
 branectl generate backend -f -p ./config/backend.yml local
 branectl generate proxy -f -p ./config/proxy.yml
-#secrets stuff
+branectl generate policy_secret -f -p ./config/policy_deliberation_secret.json
+branectl generate policy_secret -f -p ./config/policy_expert_secret.json
 branectl generate policy_db -f -p ./policies.db
-# add ip address
 branectl generate node -f -H worker.nl:$ipAddress worker worker.nl workerNode
 
 #echo "create certificate"
