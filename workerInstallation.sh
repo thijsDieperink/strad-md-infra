@@ -1,14 +1,16 @@
-#ipAddress=${1}
+ipAddress=$1
 
 echo "Lets install the worker node itself"
 
 # Install branectl 
 echo "install branectl"
-sudo curl -Lo /usr/local/bin/branectl https://github.com/epi-project/brane/releases/latest/download/branectl-linux-x86_64
-sudo chmod +x /usr/local/bin/branectl
-git clone https://github.com/epi-project/brane
-sleep 5
-cd brane
+#sudo curl -Lo /usr/local/bin/branectl https://github.com/epi-project/brane/releases/latest/download/branectl-linux-x86_64
+#sudo chmod +x /usr/local/bin/branectl
+##git clone https://github.com/epi-project/brane
+##cd brane
+#make brane-ctl PROFILE=release
+#sudo mv targets/release/branectl /usr/local/bin/branectl
+#sudo chmod +x /usr/local/bin/branectl
 
 # Brane worker stuff
 echo "create brane worker files"
@@ -17,7 +19,7 @@ branectl generate proxy -f -p ./config/proxy.yml
 #secrets stuff
 branectl generate policy_db -f -p ./policies.db
 # add ip address
-#branectl generate node -f -H worker.nl:{ipAddress} worker worker.nl workerNode
+branectl generate node -f -H worker.nl:$ipAddress worker worker.nl workerNode
 
 #echo "create certificate"
 
