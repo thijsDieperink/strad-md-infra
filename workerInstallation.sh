@@ -8,9 +8,6 @@ echo "install branectl"
 #sudo chmod +x /usr/local/bin/branectl
 git clone https://github.com/epi-project/brane
 cd brane
-#make brane-ctl PROFILE=release
-#sudo mv targets/release/branectl /usr/local/bin/branectl
-#sudo chmod +x /usr/local/bin/branectl
 
 # Brane worker stuff
 echo "create brane worker files"
@@ -23,6 +20,7 @@ branectl generate node -f -H worker.nl:$ipAddress worker worker.nl workerNode
 
 # Generate certificate
 echo "create certificate"
+branectl generate certs server  workerNode -H $ipAddress -f -p config/certs
 cd config/certs
 branectl generate certs client workerNode -H worker.nl -f -p ./client-certs
 

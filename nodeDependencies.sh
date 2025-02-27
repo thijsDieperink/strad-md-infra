@@ -20,3 +20,9 @@ sudo docker buildx create --use
 
 # maybe add test for if docker or some other dependency is installed properly
 
+# Install branectl
+git clone https://github.com/epi-project/brane
+cd brane
+#make brane-ctl PROFILE=release
+#sudo mv targets/release/branectl /usr/local/bin/branectl
+#sudo chmod +x /usr/local/bin/branectl
