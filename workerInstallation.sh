@@ -22,5 +22,5 @@ branectl generate certs client workerNode -H worker.nl -f -p ./client-certs
 
 # Make the images for the worker
 echo "make the necessary images"
-cd brane
+pwd
 make central-images PROFILE=release
