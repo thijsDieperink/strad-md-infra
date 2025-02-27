@@ -20,6 +20,7 @@ branectl generate certs server  workerNode -H $ipAddress -f -p config/certs
 cd config/certs
 branectl generate certs client workerNode -H worker.nl -f -p ./client-certs
 
+cd .. & cd ..
 # Make the images for the worker
 echo "make the necessary images"
 pwd
