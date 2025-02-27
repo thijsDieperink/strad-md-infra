@@ -23,7 +23,8 @@ branectl generate node -f -H worker.nl:$ipAddress worker worker.nl workerNode
 
 # Generate certificate
 echo "create certificate"
-mkdir config/certs & cd config/certs
+mkdir config/certs
+cd config/certs
 branectl generate certs client workerNode -H worker.nl -f -p ./client-certs
 
 # Make the images for the worker
