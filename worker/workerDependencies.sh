@@ -25,5 +25,5 @@ echo "install branectl"
 git clone https://github.com/epi-project/brane
 cd brane
 make brane-ctl PROFILE=release
-sudo mv targets/release/branectl /usr/local/bin/branectl
+sudo cp target/release/branectl /usr/local/bin/branectl
 sudo chmod +x /usr/local/bin/branectl
