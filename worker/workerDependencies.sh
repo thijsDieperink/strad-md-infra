@@ -9,14 +9,28 @@ wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 sudo apt install -y sqlite3 libsqlite3-dev
 sudo apt install -y python3
-curl --proto ‘=https’ --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+#curl --proto ‘=https’ --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 #. ”$HOME/.cargo/env”
 
 echo "Installing docker"
-sudo apt install -y docker.io docker-buildx docker-compose
+sudo aptget update 
+sudo apt-get -y ca-certificates
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -0 /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+echo "Activation docker"
 sudo systemctl enable docker --now
 sudo systemctl start docker
 sudo chmod 666 /var/run/docker.sock
+
+echo "Installing and creating buildx"
 docker buildx install
 sudo docker buildx create --use
 

@@ -1,0 +1,21 @@
+# This is the container yml file
+name: average
+version: 1.0.0
+kind: ecu
+
+dependencies:
+- python
+
+entrypoint:
+  kind: task
+  exec: average.py
+
+actions:
+  average:
+    command:
+    input:
+    - name: dataset
+      type: IntermediateResult
+    output:
+    - name: output
+      type: string
