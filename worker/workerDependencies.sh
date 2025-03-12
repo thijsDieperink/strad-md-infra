@@ -1,18 +1,21 @@
 #!/bin/bash
 
-echo "Installing dependencies for this node"
+echo "Let's start the installation of all dependencies"
+
+# General installations
+echo "--------------Installing general dependencies--------------"
 sudo apt update -y
-sudo apt install -y gcc g++ cmake pkg-config curl wget
+sudo apt install -y gcc g++ cmake pkg-config curl wget openssh-server
 sudo snap install go --classic
 sudo apt install -y openssl libssl-dev
 wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 sudo apt install -y sqlite3 libsqlite3-dev
 sudo apt install -y python3
-#curl --proto ‘=https’ --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-#. ”$HOME/.cargo/env”
+sudo systemctl enable --now ssh
 
-echo "Installing docker"
+# Docker installation
+echo "--------------Installing docker--------------"
 sudo apt-get update 
 sudo apt-get install -y ca-certificates
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -25,16 +28,16 @@ echo "$REPO_ENTRY" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-echo "Activation docker"
+echo "--------------Activation docker--------------"
 sudo systemctl start docker
 sudo chmod 666 /var/run/docker.sock
 
-echo "Installing and creating buildx"
+echo "--------------Installing and creating buildx--------------"
 docker buildx install
 sudo docker buildx create --use
 
-# Install branectl
-echo "install branectl"
+# Branectl installation
+echo "--------------Installing branectl--------------"
 git clone https://github.com/epi-project/brane
 cd brane
 make brane-ctl PROFILE=release

@@ -5,15 +5,14 @@
 import json
 import os
 
-def average(dataset: str) -> float:
-    with open(dataset, "r") as h:
-        n = 0
-        total = 0
-        for line in h.readlines():
-            n+=1
-        return n
-    
 dataset = json.load(os.environ["DATASET"])
-#avg = average(dataset)
+with open(dataset, "r") as file:
+    n = 0
+    tot = 0
+    for line in file:
+        val = int(line.strip())
+        n+=1
+        tot+=val
+    avg = tot/n
 
-print(f"output: Success")
+print(f"output: {avg}")

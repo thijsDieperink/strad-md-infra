@@ -1,0 +1,41 @@
+# container.yml file
+name: minmax
+version: 1.0.0
+kind: ecu
+
+dependencies:
+- python3
+- python3-pandas
+
+files:
+- minmax.py
+
+entrypoint:
+  kind: task
+  exec: minmax.py
+
+actions:
+  max:
+    command:
+     args:
+     - max
+    input:
+    - name: column
+      type: int
+    - name: file
+      type: Data
+    output:
+    - name: output
+      type: int
+  min:
+    command:
+      args:
+      - min
+    input:
+    - name: column
+      type: int
+    - name: file
+      type: Data
+    output:
+    - name: output
+      type: int

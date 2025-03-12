@@ -4,7 +4,10 @@ version: 1.0.0
 kind: ecu
 
 dependencies:
-- python
+- python3
+
+files:
+- average.py
 
 entrypoint:
   kind: task
@@ -18,4 +21,4 @@ actions:
       type: IntermediateResult
     output:
     - name: output
-      type: string
+      type: real
