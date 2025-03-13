@@ -52,5 +52,5 @@ sudo chmod +x /usr/local/bin/brane
 
 # Branelet installation
 echo "--------------Installing branelet--------------"
-curl -L -o /usr/local/bin/branelet https://github.com/BraneFramework/brane/releases/download/v3.0.0/branelet-x86_64
+sudo curl -L -o /usr/local/bin/branelet https://github.com/BraneFramework/brane/releases/download/v3.0.0/branelet-x86_64
 sudo chmod +x /usr/local/bin/branelet

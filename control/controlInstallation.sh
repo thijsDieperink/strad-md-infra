@@ -12,8 +12,6 @@ branectl generate infra -f -p config/infra.yml worker:worker.nl
 branectl generate proxy -f -p ./config/proxy.yml
 branectl generate node -f -H control.nl:$ipAddress central control.nl
 
-mkdir config/certs/workerNode
-
 # Make the images for the control node
 echo "--------------Make the necessary control images--------------"
 make central-images PROFILE=release

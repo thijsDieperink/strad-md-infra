@@ -43,30 +43,25 @@ Lastly, I know it is quite long and contains several steps, but just take your t
     - Install curl:
       - Run | `sudo apt update`
       - Run | `sudo apt install iputils-ping -y`
-    - Check IP address of [controlVM]: 
+    - Check IP address [ipAddressControl] of [controlVM]: 
       - Run `ip a`
       - Find the IP under enp0s8 
       - Probably something like 192.168.56.5
       - This is now your [ipAddressControl]
-    - Check IP address [ipAddressWorker] of the [workerVM]
-      - Run `ip a`
-      - Find the IP under enp0s8 
-      - Probably something like 192.168.56.5
-      - This is now your [ipAddressWorker]
-    - Go to both VMs and run `ping -c 5 [ipAddressControl]` on the [workerVM] and `ping -c 5 [ipAddressWorker]` on the [controlVM]
-    - Do this the other way around as well
-    - If there is no package loss in both tests, it worked and the VMs can successfully communicate with each other
+    - Check IP address [ipAddressWorker] of the [workerVM]. Follow the same steps as above.
+    - Test connection by running `ping -c 5 [ipAddressControl]` on the [workerVM] and `ping -c 5 [ipAddressWorker]` on the [controlVM]
+    - If there is no packet loss in both tests, it worked and the VMs can successfully communicate with each other
     - Your base environment is ready. Congrats!
 
 ## Preparing the worker node
 1.	Before we can work with the brane framework, we need to install some dependencies. First open the [workerVM]
 2.  Remember that the fiels and commands you are going to run, require sudo. So, you will be prompted to supply your VMs password
 3.	To install all necessary components, we are going to use some sh files which I prepared.
-4.	So, let’s download the code: `git clone https://github.com/thijsDieperink/strad-md-infra`
-5.  Now, first install the worker dependencies: `sh workerDependencies.sh`
-6.	One dependency that I didn’t automate yet is rust, so install this manually: 
-    - Run | `curl –proto ‘=https’ –tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y` --Sudo??
-    - Run | `. “$HOME/.cargo/env”` --Sudo??
+4.	So, let’s download the code: `git clone https://github.com/thijsDieperink/strad-md-infra` and `cd strad-md-infra`
+5.  One dependency that I didn’t automate yet is rust, so install this manually: 
+    - Run | `curl –proto ‘=https’ –tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y`
+    - Run | `. “$HOME/.cargo/env”`
+6.  Now, install the worker dependencies: `sh worker/workerDependencies.sh`
 7.  Also, the docker installation is not complete:
     - Go to the strad-md-folder
     - Run | `cat containerdConfig.json > sudo /etc/docker/daemon.json`
@@ -75,7 +70,7 @@ Lastly, I know it is quite long and contains several steps, but just take your t
 9.	If this and the *workerDependencies.sh* file runs without errors, you have properly installed all the necessary dependencies
 10. Now we are going to install the framework related dependencies
 11. We are going to do this by running the *workerInstallation.sh* file, this file creates some brane specific configuration files, certifications and downloads the necessary images
-12.	Run installation | `sh workerInstallation.sh [ipAddressWorker]`. Don't forget to add the worker's IP
+12.	Run installation | `sh worker/workerInstallation.sh [ipAddressWorker]`. Don't forget to add the worker's IP
 13.	If this runs without errors, you successfully created your worker node
 
 ## Preparing the control node
@@ -83,30 +78,30 @@ Lastly, I know it is quite long and contains several steps, but just take your t
 2.  Remember that the fiels and commands you are going to run, require sudo. So, you will be prompted to supply your VMs password
 3.	To install all necessary components, we are going to use some sh files which I prepared.
 4.	So, let’s download this code: `git clone https://github.com/thijsDieperink/strad-md-infra`
-5.  Now, first install the control dependencies: `sh controlDependencies.sh`
-6.	One dependency that I didn’t automate yet is rust, so install this manually: 
+5.  One dependency that I didn’t automate yet is rust, so install this manually: 
     - `curl –proto ‘=https’ –tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y`
     - `. “$HOME/.cargo/env”`
+6.  Now, install the control dependencies: `sh control/controlDependencies.sh`
 7.	Also, the docker installation is not complete:
     - Go to the strad-md-folder
-    - Run | `cat containerdConfig.json > sudo /etc/docker/daemon.json`
+    - Run | `cat containerdConfig.json | sudo tee /etc/docker/daemon.json`
     - Run | `sudo systemctl restart docker`
 8.  Test docker | `docker run hello-world`
 9.	If this and the *controlDependencies.sh* file runs without errors, you have properly installed all the necessary dependencies
 10. Now we are going to install the framework related dependencies
 11. We are going to do this by running the *controlInstallation.sh* file, this file creates some brane specific configuration files, certifications and downloads the necessary images
-12.	Run installation | `sh controlInstallation.sh [ipAddressControl]`. Don't forget to add the control's IP
+12.	Run installation | `sh control/controlInstallation.sh [ipAddressControl]`. Don't forget to add the control's IP
 13.	If this runs without errors, you can continue with the next step
 14. Let's add the worker node's certificate to the control node:
-    - We are going to use scp for this .......
+    - We are going to use the secure copy paste (scp) command. You can find more info in the references
     - Go to the control node
     - Make sure you are in the */strad-md-infra/brane* folder
-    - Make a folder | `mkdir config/certs/client-certs/worker`
-    - Run | `cd config/certs/client-certs/worker`
+    - Make a folder | `mkdir config/certs/worker`
+    - Move to the new folder | `cd config/certs/worker`
     - Now go to the worker node and make sure you are again in the */strad-md-infra/brane* folder
     - Run the scp command | `scp ./config/certs/ca.pem [username]@[hostnameControl]:/[path/to/config/certs/worker]`
-      - Example | `scp ./config/certs/ca.pem mdieperi@control.nl:/home/mdieperi/strad-md-infra/brane/config/certs/client-certs/worker`
-      - This will not use ssh keys, but will ask for the password of the user on the control node
+      - Example | `scp ./config/certs/ca.pem mdieperi@control.nl:/home/mdieperi/strad-md-infra/brane/config/certs/worker`
+      - This will not use ssh keys, but will go over the ssh channel and will ask for the password of the user on the control node
     - Go back to the control node and make sure that the ca.pem file is available in the */certs/client-certs/worker* folder
 
 ## Last preparation, starting the nodes and testing
@@ -121,20 +116,22 @@ Lastly, I know it is quite long and contains several steps, but just take your t
 3.	Add a usecase in the worker node.yml:
     - Open the node.yml on the [workerVM]
     - Add the mapping of the control node api under the usecases option:
-      - `Api: http://control.nl:50051`
-4.  To make sure the checker service allows the workflow, we have to create policy. For now we will create a policy that allows all workflows:
+        `central:`
+          `Api: http://control.nl:50051`
+4.  The last thing we need to do, is fix the docker installation. For some reason the nodes won't start without removing a docker specific file. For now, we will just do this, but I am working on another solution. So, run | `sudo rm -rf /etc/docker/daemon.json` and `sudo systemctl restart docker`
+5.	Now you are ready to start the nodes:
+    - On the worker VM, go tho the */strad-md-infra/brane* folder and run | `branectl start worker`
+    - On the control VM, go tho the */strad-md-infra/brane* folder and run | `branectl start central`
+6.  To make sure the checker service allows the workflow, we have to create a policy. For now we will create a policy that allows all workflows:
     - It is not necessary to understand the configuration of the policy file. For now it is important that it works
     - Open the [workerVM] and make sure you are located in the */strad-md-infra* folder
     - The tautology.json file is the policy definition and will be uploaded to the framework
     - Move tautology file | `mv tautology.json /brane`
     - Go to the brane folder | `cd brane`
-    - Upload the policy | `brane policies add ./tautology.json`
-    - Activate the policy | `brane policies list` and activate version 1
+    - Upload the policy | `branectl policies add ./tautology.json`
+    - Activate the policy | `branectl policies list` and activate version 1
     - If you get a confirmation message, congrats, you created and activated your first policy
-5.	Now you are ready to start the nodes:
-    - On the worker VM, go tho the */strad-md-infra/brane* folder and run | `branectl start worker`
-    - On the control VM, go tho the */strad-md-infra/brane* folder and run | `branectl start central`
-6.	Let's do some testing to make sure everything works properly:
+7.	Let's do some testing to make sure everything works properly:
     - Do the following on both VMs
     - Are the containers running | `docker ps`
       - On the worker node, four containers are important, *brane-reg-worker*, *brane-job-worker*, *brane-chk-worker* and *brane-prx-worker*
@@ -144,10 +141,9 @@ Lastly, I know it is quite long and contains several steps, but just take your t
       - Update apt | `apt update`
       - Install netcat | `apt install netcat-traditional`
       - Run | `nc -zv [hostname] 50053`. Hostname in this command, is the hostname (e.g control.nl) from the other VM
-        - If this gives a message "TBA", then all is well. If not, nothing is listening and you should check the containers on the other VM
-      - Run the previous command also for the ports 50051 and 50052
-      - Do the above steps also on the other VM
-7.	If you do not encounter any errors while testing, you are ready to start working with the framework. Pfff finally, but also Whoepie!!
+        - If this gives a message "succeeded!", then all is well. If not, nothing is listening on that port and you should check the containers on the other VM
+      - Run the previous command also for the ports 50051 and 50052 from the worker node and 50051 and 50053 from the control node
+8.	If you do not encounter any errors while testing, you are ready to start working with the framework. Pfff finally, but also Whoepie!!
 
 ## Some last sort of good things to know
 1. Stop an instance:
@@ -159,7 +155,7 @@ Lastly, I know it is quite long and contains several steps, but just take your t
    - When you start working with brane and open the VMs, you have to activate docker properly:
    - Activate docker | `sudo systemctl start docker`
    - Give proper permissions | `sudo chmod 666 /var/run/docker.socket`
-   - Run | `docker ps` to test if this worked
+   - Run | `docker ps` or `docker run hello-world` to test if this worked
 
 ## Starting with packages
 1. We start exploring the framework by working with a simple package.
@@ -233,7 +229,7 @@ Lastly, I know it is quite long and contains several steps, but just take your t
 
 ## More advanced workflows | minmax w intermediate results
 1. For this example we are going to write a workflow that calculates the min or max function from a list of numbers
-2. First, we will create and push a new package:
+2. First, we will create, push and test a new package:
    - Create package files:
      - Open the [controlVM] and make sure you are in the */strad-md-infra/brane* folder
      - Create a folder for your new package | `mkdir average` 
@@ -248,8 +244,8 @@ Lastly, I know it is quite long and contains several steps, but just take your t
    - Build package | `brane package build ./container.yml --init /usr/local/bin/branelet`
    - Test package locally | `brane package test average`
      - When you run the last command, you will first be asked to choose an argument, min or max (choose yourself), a column (choose 0) and a dataset. Look for numbers and press enter as hard as you can!
-   - Creating the workflow: - **not finished yet**
-     - TBA
+3. Creating the workflow: - **not finished yet**
+   - TBA
 
 ## More advanced workflows | miniML
 1. **TBA**
@@ -269,7 +265,7 @@ Brane (not all documentation is up-to-date):
 8. Hello-world package brane | https://wiki.enablingpersonalizedinterventions.nl/user-guide/software-engineers/hello-world.html 
 9. BraneScript | https://wiki.enablingpersonalizedinterventions.nl/user-guide/branescript/introduction.html
 
-Overig:
+Other:
 10. Scp | https://www.geeksforgeeks.org/scp-command-in-linux-with-examples/
 
 ## Contributing
