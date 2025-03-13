@@ -10,6 +10,8 @@ I am working on the things that are not finished yet and will update this tutori
 
 Lastly, I know it is quite long and contains several steps, but just take your time and make sure that every step works properly. I included some tests here and there to help with this. Good luck and let me know if you have questions!!!
 
+Ps: This code is available on two locations, the psydata gitlab page and my own github page. This is because you can only clone the code from gitlab when you are on the UMCU-INTERN wifi or activate JAMF Trust. So, if this is the case, use the gitlab url, otherwise use the url from my public github page. In the documentation below, I included the github one, but both are available in the references.
+
 ## Setting up the environment
 1.	Download VirtualBox
     - Go to https://www.virtualbox.org/wiki/Downloads and download VirtualBox for your specific OS
