@@ -256,17 +256,19 @@ Installation:
 2. Virtual Box general | https://www.virtualbox.org/manual/ch01.html
 3. Virtual Box networking | https://www.virtualbox.org/manual/ch06.html
 4. Ubuntu ISO image | https://ubuntu.com/download/desktop
-5. GitLab repo | 
+5. GitLab repo |
 
-Brane (not all documentation is up-to-date):
-5. Brane User guide | https://wiki.enablingpersonalizedinterventions.nl/user-guide/welcome.html
-6. General brane | https://wiki.enablingpersonalizedinterventions.nl/specification/overview.html
-7. Brane tutorials | https://wiki.enablingpersonalizedinterventions.nl/tutorials/welcome.html
-8. Hello-world package brane | https://wiki.enablingpersonalizedinterventions.nl/user-guide/software-engineers/hello-world.html 
-9. BraneScript | https://wiki.enablingpersonalizedinterventions.nl/user-guide/branescript/introduction.html
+Brane (not all documentation is up-to-date): 
+
+6. Brane User guide | https://wiki.enablingpersonalizedinterventions.nl/user-guide/welcome.html
+7. General brane | https://wiki.enablingpersonalizedinterventions.nl/specification/overview.html
+8. Brane tutorials | https://wiki.enablingpersonalizedinterventions.nl/tutorials/welcome.html
+9. Hello-world package brane | https://wiki.enablingpersonalizedinterventions.nl/user-guide/software-engineers/hello-world.html
+10. BraneScript | https://wiki.enablingpersonalizedinterventions.nl/user-guide/branescript/introduction.html
 
 Other:
-10. Scp | https://www.geeksforgeeks.org/scp-command-in-linux-with-examples/
+
+11. Scp | https://www.geeksforgeeks.org/scp-command-in-linux-with-examples/
 
 ## Contributing
 If you want to contribute to the code in some way, git clone the repo, create a branch, work on the code and open a merge request with me as a reviewer.
