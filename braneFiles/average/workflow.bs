@@ -1,1 +1,8 @@
-# To be added
+import average;
+
+let data := new Data{name := "numbers"};
+
+#[on("worker")]
+{
+    println(average(data))
+}

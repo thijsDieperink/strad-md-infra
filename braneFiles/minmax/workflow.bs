@@ -1,1 +1,12 @@
-# To be added
+import minmax;
+
+let data := new Data{name := "numbers"};
+
+#[on("worker")]
+{
+    println("Lets calculate the max value of our dataset");
+    println(max(0, data));
+
+    println("Now, lets calculate the min value of our dataset");
+    println(min(0, data));
+}

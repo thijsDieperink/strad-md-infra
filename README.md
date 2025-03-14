@@ -4,13 +4,15 @@
 ## Introduction
 Welcome to the brane tutorial for local development. If you want to learn the basics of brane and create your first package and workflow, you have come to the right place. We are first going to install two VMs on your local device with VirtualBox, then we are going to setup the worker node and control node. Thirdly, there are some last configurations that need to be performed to make everything communicate properly. Ater this, you are ready to start working with brane. 
 
-At the moment of writing, three examples are partly available. The *'hello_world'* example is complete and gives information about the inner working of the framework. The second example is called the *'average'* workflow and uses data locally and remotely (which is not complete yet) and the last example is the *'minmax'* example.
+At the moment of writing, three examples are partly available. The *'hello_world'* example is complete and gives information about the inner working of the framework. The second example is called the *'average'* workflow and uses data locally and remotely and the last example is the *'minmax'* example, which will show how to use arguments, fucntions and the BraneScript concept of IntermediateResults (this last one is not complete yet).
 
 I am working on the things that are not finished yet and will update this tutorial regurarly.
 
 Lastly, I know it is quite long and contains several steps, but just take your time and make sure that every step works properly. I included some tests here and there to help with this. Good luck and let me know if you have questions!!!
 
-Ps: This code is available on two locations, the psydata gitlab page and my own github page. This is because you can only clone the code from gitlab when you are on the UMCU-INTERN wifi or activate JAMF Trust. So, if this is the case, use the gitlab url, otherwise use the url from my public github page. In the documentation below, I included the github one, but both are available in the references.
+Ps: This code is available on two locations, the psydata gitlab page and my own github page. This is because you can only clone the code from gitlab when you are on the UMCU-INTERN wifi or activate JAMF Trust. So, if this is the case, use the gitlab url, otherwise use the url from my public github page. In the documentation below, I included the github url, but both are available in the references.
+
+Pss: Theoretically, this tutorial can be used on every device that has a x86_64 cpu architecture. Most devices do have this, bu to make sure if your device qualifies for this, run `uname -m` on mac and linux and `echo %PROCESSOR_ARCHITECTURE` on windows.
 
 ## Setting up the environment
 1.	Download VirtualBox
@@ -19,7 +21,7 @@ Ps: This code is available on two locations, the psydata gitlab page and my own 
 2.	Setup the control node VM:
     - Download the ubuntu ISO image from https://ubuntu.com/download/desktop
       - Check the installed file, it should end with amd64 for macOS intel
-      - You have the option to choose the live-server and desktop image. The first is more lightweight, uses less disk space, but doesn’t include a GUI
+      - You have the option to choose the live-server and desktop image. The first is more lightweight, uses less disk space, but doesn’t include a GUI and only pre-installs the necessary things to run
     - Go to VirtualBox and click the “New” button
     - Create a new ubuntu VM:
       - Define the name of your VM, in this document I will refer to this VM as [controlVM]
@@ -204,23 +206,23 @@ Ps: This code is available on two locations, the psydata gitlab page and my own 
    - Check if the data is available on the instance | `brane data list`
 3. Secondly, we will create and push a new package:
    - Create package files:
-     - Go to the strad-md-infra folder
+     - Go to the *strad-md-infra* folder
      - Run | `cp braneFiles/average/average.py brane/average`
      - Run | `cp braneFiles/average/container.yml brane/average`
      - Go back to the average folder in the brane repo | `cd brane/average` and investigate the content of the average.py and container.yml file
-       - Average.py:
-         - Stuff
-       - Container.yml:
-         - Stuff
      - Build package | `brane package build ./container.yml --init /usr/local/bin/branelet`
      - Test package locally | `brane package test average`
        - When you run the last command, you will be asked to choose a dataset. Look for numbers and press enter as hard as you can!
-   - Something important to note: untill now we only used data from the control node for local testing. In the next step, we are going to create a datafile on the worker node as well that differs from the datafile on the control node. In this way, we can see what file is used for execution of the workflow
-4. Data from worker node - **not finished yet**
-   - TBA
+   - Something important to note: untill now, we only used data from the control node for local testing. In the next step, we are going to create a datafile on the worker node as well that differs from the datafile on the control node. In this way, we can see what file is used for execution of the workflow
+4. Data from worker node
    - Create datafile on the worker node:
-     - Stuff
+     - Open the [workerVM] and make sure you are located in the *strad-md-infra* folder
+     - Create new data folder | `mkdir /brane/data/numbers`
+     - Copy data config to new folder | `cp braneFiles/average/data/data.yml brane/data/numbers`
+     - Go to new folder | `cd brane/data/numbers`
+     - Create new data file | `seq 20 29 > numbers.csv`, this file has a different content than our datafile on the control node
    - Make package available on the instance
+     - Go to the [controlVM]
      - Push package to instance | `brane package push average`
      - Check if package is available on the instance | `brane package search`
    - Lastly, we will create and run the workflow:
@@ -228,26 +230,24 @@ Ps: This code is available on two locations, the psydata gitlab page and my own 
      - Copy the workflow | `cp braneFiles/average/workflow.bs brane/average`
      - Move to the average folder | `cd brane/average` and investigate the content of the workflow.bs file
      - Run the workflow | `brane workflow run ./workflow.bs --remote`
+5. Congrats!! That was your first workflow with data from the worker node. As you can imagine, you can theoretically set up several worker node and create code that runs on both environments. You can even specifically assign specific execution to specific workers. 
+6. In the next example we are going to look at a slightly more complicated example in which we will use two functions, arguments, an extra input variable and intermediate results
 
-## More advanced workflows | minmax w intermediate results
+## More advanced workflows | minmax w intermediate results (**not finished**)
 1. For this example we are going to write a workflow that calculates the min or max function from a list of numbers
 2. First, we will create, push and test a new package:
    - Create package files:
-     - Open the [controlVM] and make sure you are in the */strad-md-infra/brane* folder
-     - Create a folder for your new package | `mkdir average` 
-     - Go to the strad-md-infra folder
-     - Run | `cp braneFiles/minmax/minmax.py brane/minmax`
-     - Run | `cp braneFiles/minmax/container.yml brane/minmax`
-     - Go back to the average folder in the brane repo | `cd brane/minmax` and investigate the content of the minmax.py and container.yml file
-       - minmax.py:
-         - Stuff
-       - Container.yml:
-         - Stuff
+     - Open the [controlVM] and make sure you are in the */strad-md-infra* folder
+     - Copy the entire minmax folder | `cp -r braneFiles/minmax brane/minmax`
+     - Go back to the minmax folder in the brane repo | `cd brane/minmax` and investigate the content of the minmax.py and container.yml file
    - Build package | `brane package build ./container.yml --init /usr/local/bin/branelet`
-   - Test package locally | `brane package test average`
+   - Test package locally | `brane package test minmax`
      - When you run the last command, you will first be asked to choose an argument, min or max (choose yourself), a column (choose 0) and a dataset. Look for numbers and press enter as hard as you can!
-3. Creating the workflow: - **not finished yet**
-   - TBA
+3. Running the workflow:
+   - Now we will run workflow remotely using the workflow.bs file. First investigate this file and notice how the min and max function are called
+   - Run workflow | `brane workflow run ./workflow.bs --remote`
+4. If the previous workflow runs smoothly, we are going to switch up our output gears. That means, we are going to write the output of our workflow to a file, instead of to the command line.
+   - **TBA**
 
 ## More advanced workflows | miniML
 1. **TBA**
@@ -258,19 +258,20 @@ Installation:
 2. Virtual Box general | https://www.virtualbox.org/manual/ch01.html
 3. Virtual Box networking | https://www.virtualbox.org/manual/ch06.html
 4. Ubuntu ISO image | https://ubuntu.com/download/desktop
-5. GitLab repo |
+5. GitLab repo | https://gitlab.op.umcutrecht.nl/PsyData/strad/strad-md-infra
+6. GitHub repo | https://github.com/thijsDieperink/strad-md-infra
 
 Brane (not all documentation is up-to-date): 
 
-6. Brane User guide | https://wiki.enablingpersonalizedinterventions.nl/user-guide/welcome.html
-7. General brane | https://wiki.enablingpersonalizedinterventions.nl/specification/overview.html
-8. Brane tutorials | https://wiki.enablingpersonalizedinterventions.nl/tutorials/welcome.html
-9. Hello-world package brane | https://wiki.enablingpersonalizedinterventions.nl/user-guide/software-engineers/hello-world.html
-10. BraneScript | https://wiki.enablingpersonalizedinterventions.nl/user-guide/branescript/introduction.html
+7. Brane User guide | https://wiki.enablingpersonalizedinterventions.nl/user-guide/welcome.html
+8. General brane | https://wiki.enablingpersonalizedinterventions.nl/specification/overview.html
+9. Brane tutorials | https://wiki.enablingpersonalizedinterventions.nl/tutorials/welcome.html
+10. Hello-world package brane | https://wiki.enablingpersonalizedinterventions.nl/user-guide/software-engineers/hello-world.html
+11. BraneScript | https://wiki.enablingpersonalizedinterventions.nl/user-guide/branescript/introduction.html
 
 Other:
 
-11. Scp | https://www.geeksforgeeks.org/scp-command-in-linux-with-examples/
+12. Scp | https://www.geeksforgeeks.org/scp-command-in-linux-with-examples/
 
 ## Contributing
 If you want to contribute to the code in some way, git clone the repo, create a branch, work on the code and open a merge request with me as a reviewer.
