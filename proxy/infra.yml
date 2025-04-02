@@ -1,0 +1,5 @@
+locations:
+  worker:
+    name: Worker
+    delegate: https://worker.nl:50054
+    registry: https://worker.nl:50055

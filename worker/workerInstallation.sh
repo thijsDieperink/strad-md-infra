@@ -18,7 +18,7 @@ branectl generate node -f -H worker.nl:$ipAddress worker worker.nl worker
 
 # Generate certificate
 echo "--------------Create certificate--------------"
-branectl generate certs server  worker -H $ipAddress -f -p config/certs
+branectl generate certs server worker -H $ipAddress -f -p config/certs
 cd config/certs
 branectl generate certs client worker -H worker.nl -f -p ./client-certs
 
