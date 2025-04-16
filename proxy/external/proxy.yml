@@ -1,0 +1,7 @@
+outgoing_range:
+  start: 4200
+  end: 4299
+incoming:
+  50051: worker.nl:50052
+  50052: worker.nl:50051
+  50053: control.nl:50054
