@@ -35,8 +35,8 @@ services:
     init: true
     container_name: ${CHK_NAME:-brane-chk}
     command: -s "node-file-path=/node.yml"
-    ports:
-    - "0.0.0.0:${CHK_PORT}:${CHK_PORT}"
+    #ports:
+    #- "0.0.0.0:${CHK_PORT}:${CHK_PORT}"
     restart: always
     environment:
     - ADDRESS=0.0.0.0:${CHK_PORT}

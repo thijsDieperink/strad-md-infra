@@ -1,0 +1,6 @@
+import hello_world;
+
+#[on("workerlocal")]
+{
+    println(hello_world());
+}
