@@ -1,11 +1,13 @@
-# Brane examples 
+# Brane tutorials 
 
 ## Introduction
-Stuff
+At the moment of writing, three examples are partly available and two are under construction. The *'hello_world'* example is complete and gives information about the inner working of the framework. The second example is called the *'average'* workflow and uses data locally and remotely and the last example is the *'minmax'* example, which will show how to use arguments, fucntions and the BraneScript concept of IntermediateResults (this last feature is not complete yet). I am working on the tutorials that are not finished and will update this readme regurarly.
+
+The next sections assume that you have a working brane setup with instance ready to use. If this is not the case yet, go to the *'setup'* folder and choose one of the setups to implement. 
 
 ## Starting with packages
-1. We start exploring the framework by working with a simple package.
-2. But, before we can do anything with packages, we need to define a brane instance
+1. We start exploring the framework by working with a simple hello world package
+2. But, before we can do anything with packages, we need to define a brane instance. So if you haven't selected a brane instance yet, perform the following steps:
     - Make sure all brane services (containers) are running properly in the worker and control node
     - Go to the control node and run | `brane instance add control.nl –name demoInstance`. This will create an instance called *demoInstance*
     - Then, run | `brane instance list` to show if your instance is created properly
@@ -36,4 +38,4 @@ Stuff
 6. This is just a simple workflow definition, but you can imagine that several packages can be used together to create a larger block of functionality in one bs file.
 
 ## Continue with more advanced workfows
-TBA
+Now that you have created and run your first package and workflow, you can move on to more complicated packages. As mentioned in the introduction, I created several of these in this folder. We have the average, minmax, basicML and intermediateML tutorials. The last two are not ready, so I suggest to start with average and then move to minmax. More information can be found in the readme of their specific folder. Good luck!

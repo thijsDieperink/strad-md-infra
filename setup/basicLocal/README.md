@@ -1,7 +1,7 @@
 # Basic Local setup --> **not finished**
 
 ## Introduction
-In this readme the implementation of the most basic setup will be explained. That is, a brane instance located on a laptop's host system with one worker and one control node. The "Implementation" section describes, in four steps, how to create this system for Mac (M & intel CPUs), Ubuntu and Windows. Inclusion of other Linux-distributions will follow later. If you have a non-Ubuntu Linux distribution, check the dependencies.sh file in the folder to see which packages need to be installed.
+In this readme the implementation of the most basic setup will be explained. That is, a brane instance located on a laptop's host system with one worker and one control node. The "Implementation" section describes, in four steps, how to create this system for Mac (M & intel CPUs), Ubuntu and Windows (inder construction). Inclusion of other Linux-distributions will follow later. If you have a non-Ubuntu Linux distribution, check the dependencies.sh file in the folder to see which packages need to be installed.
 
 ## Implementation
 Because both nodes will be created on the same machine, they will have the same hostname and ip address. This means that the local setup is slightly different than a real life brane instance, but the goal of this folder, is to allow for a more simple and faster-to-implement setup. 
@@ -17,7 +17,7 @@ First we are going to create the environment in which we are going to work. Beca
       - Run | `. “$HOME/.cargo/env”`
     - Windows | **TBA**
 4. Installing dependencies:
-   - ***Warning***: *running the following script will install docker. Because this is a relatively intensive applicaation you can skip its installation by providing the argument 'no' behind the command below. But keep in mind that docker is necessary for brane, so if you pass 'no', you should still install docker yourself*
+   - ***Warning***: *running the following script will install docker. Because this is a relatively intensive applicaation you can skip its installation by providing the argument 'no' when running the command below. But keep in mind that docker is necessary for brane, so if you pass 'no', you should still install docker yourself*
    - Move to the *'strad-md-infra'* folder
    - MacOS/Ubuntu | `sh setup/basicLocal/dependencies.sh yes`
    - Windows | **TBA**
@@ -60,7 +60,7 @@ To implement the control node, we are going to use a script that will automate t
      - prx = 50054
      - api = 50055
      - drv = 50056
-     - plt = 50057
+     - plr = 50057
      - Make sure all references to these ports are changed
 5. Now start up the control node:
    - MacOS/Ubuntu | `branectl start control -f docker-compose-central.yml`
@@ -76,7 +76,7 @@ To implement the control node, we are going to use a script that will automate t
 1. If all containers are running properly, you can test your local setup by running a hello_world workflow
 2. Go to the control node folder and move to the *'hello_world'* folder
 3. Define instance:
-   - Add instance | `brane instance add http://localhost --name localInstance`
+   - Add instance | `brane instance add http://localhost --name localInstance --api-port 50055`
    - Select instance | `brane instance select localInstance`
 4. Build the package | `brane package build ./container.yml`
 5. Test package | `brane package test hello_world`
@@ -85,4 +85,4 @@ To implement the control node, we are going to use a script that will automate t
 8. Congrats, you just ran your first workflow in your newly created local setup
 9. This hello_world test was purely for making sure the setup works. If your goal is to dive deeper in the ML side of brane, then I suggest to go to the 'tutorials' folder of this repository
 10. Here you can create your own hello_world code and investigate more complicated code examples
-11. If you are intested in the brane infrastructural setup. You can move to a more complicated scenario. An detailed description of this is provided in the folder 'basicVBox' 
+11. If you are intested in the brane infrastructural setup. You can move to a more complicated scenario. A detailed description of this is provided in the folder 'basicVBox' 

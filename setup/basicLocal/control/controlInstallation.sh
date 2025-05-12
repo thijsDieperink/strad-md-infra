@@ -5,7 +5,7 @@ echo "Lets install the control node itself"
 # Brane control stuff
 echo "--------------Create brane control files--------------"
 
-branectl generate infra -f -p config/infra.yml branelocal:localhost
+branectl generate infra -f -p config/infra.yml worker:localhost
 branectl generate proxy -f -p ./config/proxy.yml
 branectl generate node -f -H localhost:127.0.0.1 central localhost
 
@@ -14,9 +14,9 @@ echo "--------------Make the necessary control images--------------"
 make central-images PROFILE=release
 
 # Copy certificate from worker
-mkdir config/certs/workerlocal
+mkdir config/certs/worker
 cd ..
-cp worker/config/certs/ca.pem control/config/certs/workerlocal
+cp worker/config/certs/ca.pem control/config/certs/worker
 
 # Create hello world folder
 cd ..

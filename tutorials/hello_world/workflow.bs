@@ -1,6 +1,6 @@
 import hello_world;
 
-#[on("workerlocal")]
+#[on("worker")]
 {
     println(hello_world());
 }

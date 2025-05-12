@@ -4,7 +4,7 @@
 TBA
 
 ## Implementation
-TBA
+To implement this scenario, several steps need to be perfomed. This section guides you through this process step by step. I recommend to go over these carefully and perform the test that are provided and do some extra test if you think that is appropriate.
 
 ### Setting up the environment
 1.	Download VirtualBox
@@ -57,7 +57,7 @@ TBA
 5.  One dependency that I didn’t automate yet is rust, so install this manually: 
     - Run | `curl –proto ‘=https’ –tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y`
     - Run | `. “$HOME/.cargo/env”`
-6.  Now, install the worker dependencies: `sh worker/workerDependencies.sh`
+6.  Now, install the worker dependencies: `sh setup/basicVBox/worker/workerDependencies.sh`
 7.  Also, the docker installation is not complete:
     - Go to the strad-md-folder
     - Run | `cat containerdConfig.json > sudo /etc/docker/daemon.json`
@@ -66,7 +66,7 @@ TBA
 9.	If this and the *workerDependencies.sh* file runs without errors, you have properly installed all the necessary dependencies
 10. Now we are going to install the framework related dependencies
 11. We are going to do this by running the *workerInstallation.sh* file, this file creates some brane specific configuration files, certifications and downloads the necessary images
-12.	Run installation | `sh worker/workerInstallation.sh [ipAddressWorker]`. Don't forget to add the worker's IP
+12.	Run installation | `sh setup/basicVBox/worker/workerInstallation.sh [ipAddressWorker]`. Don't forget to add the worker's IP
 13.	If this runs without errors, you successfully created your worker node
 
 ### Preparing the control node
@@ -77,7 +77,7 @@ TBA
 5.  One dependency that I didn’t automate yet is rust, so install this manually: 
     - `curl –proto ‘=https’ –tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y`
     - `. “$HOME/.cargo/env”`
-6.  Now, install the control dependencies: `sh control/controlDependencies.sh`
+6.  Now, install the control dependencies: `sh setup/basicVBox/control/controlDependencies.sh`
 7.	Also, the docker installation is not complete:
     - Go to the strad-md-folder
     - Run | `cat containerdConfig.json | sudo tee /etc/docker/daemon.json`
@@ -86,7 +86,7 @@ TBA
 9.	If this and the *controlDependencies.sh* file runs without errors, you have properly installed all the necessary dependencies
 10. Now we are going to install the framework related dependencies
 11. We are going to do this by running the *controlInstallation.sh* file, this file creates some brane specific configuration files, certifications and downloads the necessary images
-12.	Run installation | `sh control/controlInstallation.sh [ipAddressControl]`. Don't forget to add the control's IP
+12.	Run installation | `sh setup/basicVBox/control/controlInstallation.sh [ipAddressControl]`. Don't forget to add the control's IP
 13.	If this runs without errors, you can continue with the next step
 14. Let's add the worker node's certificate to the control node:
     - We are going to use the secure copy paste (scp) command. You can find more info in the references
@@ -152,3 +152,6 @@ TBA
    - Activate docker | `sudo systemctl start docker`
    - Give proper permissions | `sudo chmod 666 /var/run/docker.socket`
    - Run | `docker ps` or `docker run hello-world` to test if this worked
+
+## Testing
+Now you have implemented your brane setup, it is time to test it and run a workflow. To start with this, I suggest to read the readme of the *'tutorials'* folder properly. This will help you get familiar with all the brane related things. Good luck!!

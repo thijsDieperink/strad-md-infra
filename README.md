@@ -1,45 +1,14 @@
 # strad-md-infra
-*Updated: 12-02-2024*
+*Updated: 12-05-2024*
 
 ## Introduction
-Welcome to the brane tutorial for local development. If you want to learn the basics of brane and create your first package and workflow, you have come to the right place. We are first going to install two VMs on your local device with VirtualBox, then we are going to setup the worker node and control node. Thirdly, there are some last configurations that need to be performed to make everything communicate properly. Ater this, you are ready to start working with brane. 
+Welcome to this strad md infrastructure repository. This repo is focused around development with the brane framework. So, if you want to learn the basics of brane and create your first package and workflow, you have come to the right place. 
 
-At the moment of writing, three examples are partly available. The *'hello_world'* example is complete and gives information about the inner working of the framework. The second example is called the *'average'* workflow and uses data locally and remotely and the last example is the *'minmax'* example, which will show how to use arguments, fucntions and the BraneScript concept of IntermediateResults (this last one is not complete yet).
+The repo is structured so that there is a clear separation between the different sort of tutorials. The folder *'tutorial'* houses all information about the different brane examples/tutorials you can use. If you take a look in this folder, you see a readme which you can go through to start with this part of the repo.
+But before you can actually develop with brane, you need to setup a brane system or instance, and to do that, you can go thorugh the *'setup'* folder. Here you can find different setups for different operating systems (OS) and CPU-architectures. Not all scenarios are finished, so if your OS-CPU combination is not supported, let me know and I will add it to the TODO list. If you are not sure about your CPU-architecture, run `uname -m` on mac and linux and `echo %PROCESSOR_ARCHITECTURE` on windows.
+The last folder is called *'configFiles'* and contains some configuration files that need to be run throughout the different instructions in this repo and is not important for now. 
 
-I am working on the things that are not finished yet and will update this tutorial regurarly.
-
-Lastly, I know it is quite long and contains several steps, but just take your time and make sure that every step works properly. I included some tests here and there to help with this. Good luck and let me know if you have questions!!!
-
-Ps: This code is available on two locations, the psydata gitlab page and my own github page. This is because you can only clone the code from gitlab when you are on the UMCU-INTERN wifi or activate JAMF Trust. So, if this is the case, use the gitlab url, otherwise use the url from my public github page. In the documentation below, I included the github url, but both are available in the references.
-
-Pss: Theoretically, this tutorial can be used on every device that has a x86_64 cpu architecture. Most devices do have this, bu to make sure if your device qualifies for this, run `uname -m` on mac and linux and `echo %PROCESSOR_ARCHITECTURE` on windows.
-
-## Setting up the environment
-
-## Preparing the worker node
-
-## Preparing the control node
-
-## Last preparation, starting the nodes and testing
-
-## Some last sort of good things to know
-
-
-## Starting with packages
-
-## Starting with workflows
-
-
-## More advanced workflows | average
-
-## More advanced workflows | minmax w intermediate results (**not finished**)
-
-## More advanced workflows | basicML **(not finished)**
-
-## More advanced workflows | intermediateML **(not finished)**
-
-<<Add:
- - different use between gilab and github>>
+This repository is available on two locations, the PsyData Gitlab page and my own Github page. For those that have access to the UMCU PsyData Gitlab, make sure that you are on the UMCU-INTERN wifi or activate JAMF Trust. For those that don't, you can use my publicly available Github repo. In the documentation throughout this repository, I included the Github URL, but both URLs can be found in the references at the end of this readme. So change this the URL according to your scenario.
 
 ## References
 Installation:
