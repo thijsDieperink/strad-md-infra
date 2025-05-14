@@ -1,4 +1,4 @@
-# Proxy implementation
+# Proxy VirtualBox setup
 
 ## Introduction
 This readme gives an explanation about how to use a proxy in the brane framework. By default the framework uses the control proxy for outgoing communication and doesn't use the worker proxy at all. If you want to use a proxy properly, you can choose between three scenarios, an internal brane proxy service, an external brane proxy node or an external other proxy. All of these scenarios are described in more detail below. 

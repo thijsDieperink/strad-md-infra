@@ -1,0 +1,121 @@
+name: visualization
+version: 1.0.0
+kind: ecu # Executable Code Unit
+
+description: ""
+
+contributors:
+  - Andrea Marino <am.marinoandrea@gmail.com>
+  - Jingye Wang <wangjycode@gmail.com>
+
+dependencies:
+  - python3
+  - python3-yaml
+
+install:
+  - apt update && apt upgrade -y 
+  - apt install -y pipenv
+
+files:
+  - Pipfile
+  - Pipfile.lock
+  - run.py
+  - __init__.py
+  - visualization.py
+  - result.html
+
+postinstall:
+  - pipenv install --system --deploy
+
+entrypoint:
+  kind: task
+  exec: run.py
+
+actions:
+  visualization_action:
+    command:
+      capture: marked
+      args:
+        - visualization_action
+    input:
+      - type: IntermediateResult
+        name: filepath_train_dataset
+      - type: IntermediateResult
+        name: filepath_test_dataset
+      - type: IntermediateResult
+        name: filepath_sub_dataset
+    output:
+      - type: IntermediateResult
+        name: output
+  
+
+  generate_prediction_plot:
+    command:
+      capture: marked
+      args:
+        - generate_prediction_plot
+    input:
+      - type: IntermediateResult
+        name: filepath_test_dataset
+      - type: IntermediateResult
+        name: filepath_sub_dataset
+    output:
+      - type: IntermediateResult
+        name: output
+
+
+  generate_location_profile:
+    command:
+      capture: marked
+      args:
+        - generate_location_profile
+    input:
+      - type: IntermediateResult
+        name: filepath_dataset
+      - type: integer
+        name: n_top
+    output:
+      - type: IntermediateResult
+        name: output
+
+  generate_tweets_profile:
+    command:
+      capture: marked
+      args:
+        - generate_tweets_profile
+    input:
+      - type: IntermediateResult
+        name: filepath_dataset
+      - type: integer
+        name: n_top
+    output:
+      - type: IntermediateResult
+        name: output
+
+  generate_keywords_profile:
+    command:
+      capture: marked
+      args:
+        - generate_keywords_profile
+    input:
+      - type: IntermediateResult
+        name: filepath_dataset
+      - type: integer
+        name: n_top
+    output:
+      - type: IntermediateResult
+        name: output
+
+  plot_bigrams_distribution:
+    command:
+      capture: marked
+      args:
+        - plot_bigrams_distribution
+    input:
+      - type: IntermediateResult
+        name: filepath_dataset
+      - type: integer
+        name: n_top_bigrams
+    output:
+      - type: IntermediateResult
+        name: filepath_image

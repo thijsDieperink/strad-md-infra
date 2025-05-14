@@ -1,0 +1,6 @@
+import hello_world;
+
+#[on("worker")]
+{
+    println(hello_world());
+}

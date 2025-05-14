@@ -19,9 +19,6 @@ services:
     container_name: ${PRX_NAME:-brane-prx}
     command: --debug
     restart: always
-    ports:
-    - "0.0.0.0:50054:50054"
-    - "0.0.0.0:50055:50055"
     volumes:
     - ${NODE_CONFIG_PATH}:/node.yml
     - ${PROXY:-}:${PROXY:-}
@@ -36,10 +33,12 @@ services:
     container_name: ${CHK_NAME:-brane-chk}
     command: -s "node-file-path=/node.yml"
     ports:
-    - "0.0.0.0:${CHK_PORT}:${CHK_PORT}"
+    #- "0.0.0.0:${CHK_PORT}:${CHK_PORT}"
+    - "0.0.0.0:50056:50056"
     restart: always
     environment:
-    - ADDRESS=0.0.0.0:${CHK_PORT}
+    #- ADDRESS=0.0.0.0:${CHK_PORT}
+    - ADDRESS=0.0.0.0:50056
     volumes:
     - ${NODE_CONFIG_PATH}:/node.yml
     - ${POLICY_DB}:/data/policy.db
@@ -53,8 +52,9 @@ services:
     image: brane-reg:${BRANE_VERSION:-latest}
     container_name: ${REG_NAME:-brane-reg}
     command: --debug
-    #ports:
+    ports:
     #- "0.0.0.0:${REG_PORT}:${REG_PORT}"
+    - "0.0.0.0:50054:50054"
     restart: always
     volumes:
     - ${NODE_CONFIG_PATH}:/node.yml
@@ -71,8 +71,9 @@ services:
     image: brane-job:${BRANE_VERSION:-latest}
     container_name: ${JOB_NAME:-brane-job}
     command: --debug
-    #ports:
+    ports:
     #- "0.0.0.0:${JOB_PORT}:${JOB_PORT}"
+    - "0.0.0.0:50051:50051"
     restart: always
     volumes:
     - ${NODE_CONFIG_PATH}:/node.yml
