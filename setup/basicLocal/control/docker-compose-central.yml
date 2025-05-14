@@ -29,7 +29,7 @@ services:
     command: --debug
     restart: always
     ports:
-    - "0.0.0.0:50054:50054"
+    - "0.0.0.0:50050:50050"
     volumes:
     - ${NODE_CONFIG_PATH}:/node.yml
     - ${PROXY:-}:${PROXY:-}
@@ -69,7 +69,7 @@ services:
     restart: always
     ports:
     #- "0.0.0.0:${DRV_PORT}:${DRV_PORT}"
-    - "0.0.0.0:50056:50056"
+    - "0.0.0.0:50053:50053"
     volumes:
     - ${NODE_CONFIG_PATH}:/node.yml
     - ${INFRA}:${INFRA}
