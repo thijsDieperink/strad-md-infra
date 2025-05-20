@@ -53,7 +53,7 @@ In this system, there are two types of communication. Communication that is for 
 
 Below, steps are defined to implement this scenario.
 1. Create proxy node
-   - Create a separate VM and run the worker node dependencies according to the steps described in the main README
+   - Create a separate VM and run the worker node dependencies according to the steps described in the README of the basicLocal folder
    - Change the *docker-compose-proxy.yml* file for the one in the */external* folder
    - Create a */config* folder and add the *proxy.yml* file from the */external* folder
    - Spin up the proxy with command `branectl start proxy -f docker-compose-proxy.yml`
@@ -71,7 +71,7 @@ Below, steps are defined to implement this scenario.
    - Add the proxy hostname mapping to the */etc/hosts* file
    - Make sure that the reg and job services are reachable and the proxy node is reachable from the worker node
 3. Adjust control node
-   - Change the following to the *node.yml* file:
+   - Change the following in the *node.yml* file:
      - Add the proxy hostname mapping
    - Change the addresses in the *config/infra.yml* file to:
      - `delegate: https://proxy.nl:50051`
