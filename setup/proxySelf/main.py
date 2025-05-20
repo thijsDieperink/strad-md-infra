@@ -102,9 +102,10 @@ async def create_outgoing(req: OutgoingRequest):
     try:
         host, port_str = req.address.split(":")
         port = int(port_str)
+        return {"port": port}
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid address format. Use host:port")
-    
+"""
     # Check if route already exists
     if req.address in routes:
         logging.info(f"Reusing existing route for {req.address} → {routes[req.address]}")
@@ -127,3 +128,4 @@ async def create_outgoing(req: OutgoingRequest):
 
     asyncio.create_task(start_forwarder())
     return {"port": proxy_port}
+"""

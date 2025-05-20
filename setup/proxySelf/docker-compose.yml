@@ -4,6 +4,6 @@ services:
     #network_mode: "host" # for Linux
     ports: # for MacOS and Windows
       - "8080:8080"
-      - "50000-51000:50000-51000"  
+      #- "50000-51000:50000-51000"  
     environment:
       - PYTHONUNBUFFERED=1
