@@ -6,6 +6,8 @@ from contextlib import asynccontextmanager
 import asyncio
 import socket
 import logging
+from urllib.parse import urlparse
+from fastapi.responses import PlainTextResponse
 
 logging.basicConfig(level=logging.INFO)
 
@@ -24,7 +26,7 @@ class RouteInfo:
         self.port = port
         self.last_used = datetime.now()
 
-ALLOWED_PORT_RANGE = range(50000, 51000)
+ALLOWED_PORT_RANGE = range(50053, 51063)
 
 # Helper to get a free local TCP port
 async def get_free_port():
@@ -100,12 +102,12 @@ app = FastAPI(lifespan=lifespan)
 async def create_outgoing(req: OutgoingRequest):
     # Just parse and respond with a dummy port
     try:
-        host, port_str = req.address.split(":")
-        port = int(port_str)
-        return {"port": port}
+        parsed = urlparse(req.address)
+        host = parsed.hostname
+        port = parsed.port
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid address format. Use host:port")
-"""
+
     # Check if route already exists
     if req.address in routes:
         logging.info(f"Reusing existing route for {req.address} → {routes[req.address]}")
@@ -127,5 +129,4 @@ async def create_outgoing(req: OutgoingRequest):
             await server.serve_forever()
 
     asyncio.create_task(start_forwarder())
-    return {"port": proxy_port}
-"""
+    return PlainTextResponse(str(proxy_port))

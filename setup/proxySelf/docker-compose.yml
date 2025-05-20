@@ -2,8 +2,15 @@ services:
   proxy:
     build: .
     #network_mode: "host" # for Linux
+    deploy:
+      resources:
+        limits: 
+          memory: 512M
     ports: # for MacOS and Windows
       - "8080:8080"
-      #- "50000-51000:50000-51000"  
+      - "50050:50050"
+      - "50051:50051"
+      - "50052:50052"
+      - "50053-50063:50053-50063"  
     environment:
       - PYTHONUNBUFFERED=1
