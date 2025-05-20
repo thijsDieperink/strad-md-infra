@@ -22,7 +22,7 @@ COPY --from=fastapi-builder /app /app
 WORKDIR /app
 
 # Copy NGINX config
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+#COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Install python dependencies
